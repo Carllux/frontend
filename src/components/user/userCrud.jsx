@@ -4,14 +4,14 @@ import axios from 'axios'
 import { baseUrl } from "../../main/Config.jsx";
 
 const headerProps = {
-    icon: 'users',
-    title: 'Usuários',
-    subtitle: 'Cadastro de usuários: incluir, listar, alterar e excluir'
+    icon: 'money-bill-wheat',
+    title: 'Produtos',
+    subtitle: 'Página de cadastro de produtos'
 }
 
 
 const initialState = {
-    user: { name: '', email: '' },
+    user: { name: '', quantity: 0.00, sellValue: 0.00, costValue: 0.00, type: '' },
     list: []
 }
 
@@ -27,7 +27,7 @@ export default class UserCrud extends Component {
 
     componentWillMount() {
         axios(baseUrl).then(resp => {
-            this.setState({ list: resp.data})
+            this.setState({ list: resp.data })
         })
     }
 
@@ -54,26 +54,75 @@ export default class UserCrud extends Component {
         return (
             <div className="form">
                 <div className="row">
-                    <div className="col-12 col-md-6">
+                    <div className="col-lg col-md-12">
                         <div className="form-group">
-                            <label htmlFor="">Nome</label>
-                            <input type="text" className="form-control"
-                                name="name"
-                                value={this.state.user.name}
-                                onChange={e => this.updateField(e)}
-                                placeholder="Digite o nome" />
-                        </div>
-                    </div>
-                    <div className="col-12 col-md-6">
-                        <div className="form-group">
-                            <label htmlFor="">E-mail</label>
+                            <label htmlFor=""><strong>Nome</strong></label>
                             <input type="text" className="form-control"
                                 name="email"
-                                value={this.state.user.email}
+                                value={this.state.user.name}
                                 onChange={e => this.updateField(e)}
-                                placeholder="Digite o e-email" />
+                                placeholder="Digite o nome do produto" />
                         </div>
                     </div>
+
+                </div>
+                <div className="row">
+                    <div className="col-lg col-md-6">
+                        <div className="form-group">
+                            <label htmlFor=""><strong>Quantidade</strong></label>
+                            <input type="text" className="form-control"
+                                name="email"
+                                value={this.state.user.quantity}
+                                onChange={e => this.updateField(e)}
+                                placeholder="0.00" />
+                        </div>
+                    </div>
+                </div>
+                <div className="row">
+                    <div className="col-lg col-md-6">
+                        <div className="form-group">
+                            <label htmlFor=""><strong>Valor venda</strong></label>
+                            <input type="text" className="form-control"
+                                name="email"
+                                value={this.state.user.sellValue}
+                                onChange={e => this.updateField(e)}
+                                placeholder="0.00" />
+                        </div>
+                    </div>
+                </div>
+                <div className="row">
+                    <div className="col-lg col-md-6">
+                        <div className="form-group">
+                            <label htmlFor=""><strong>Valor de custo</strong></label>
+                            <input type="text" className="form-control"
+                                name="email"
+                                value={this.state.user.costValue}
+                                onChange={e => this.updateField(e)}
+                                placeholder="0.00" />
+                        </div>
+                    </div>
+                </div>
+                <div className="row">
+                    <span className="ml-center p-3"><strong>Tipo de produto</strong></span>
+                    <div class="form-check form-check-inline p-3">
+                        <input class="form-check-input" type="radio" name="inlineRadioOptions" value="dog" />
+                        <label class="form-check-label" for="inlineRadio1">Produtos Cachorros</label>
+                    </div>
+
+                    <div class="form-check form-check-inline p-3">
+                        <input class="form-check-input" type="radio" name="inlineRadioOptions" value="cat" />
+                        <label class="form-check-label" for="inlineRadio2">Produtos Gatos</label>
+                    </div>
+
+                    <div class="form-check form-check-inline p-3">
+                        <input class="form-check-input" type="radio" name="inlineRadioOptions" value="bird" />
+                        <label class="form-check-label" for="inlineRadio3">Produtos Aves</label>
+                    </div>
+                    <div class="form-check form-check-inline p-3">
+                        <input class="form-check-input" type="radio" name="inlineRadioOptions" value="fish" />
+                        <label class="form-check-label" for="inlineRadio3">Produtos Peixes</label>
+                    </div>
+
                 </div>
                 <hr />
                 <div className="row">
@@ -109,8 +158,11 @@ export default class UserCrud extends Component {
                 <thead>
                     <tr>
                         <th>ID</th>
-                        <th>Nome</th>
-                        <th>E-mail</th>
+                        <th>Produto</th>
+                        <th>Quantidade</th>
+                        <th>Valor custo</th>
+                        <th>Valor venda</th>
+                        <th>Tipo de produto</th>
                         <th>Ações</th>
                     </tr>
                 </thead>
@@ -128,14 +180,17 @@ export default class UserCrud extends Component {
                 <tr key={user.id}>
                     <td>{user.id}</td>
                     <td>{user.name}</td>
-                    <td>{user.email}</td>
+                    <td>{user.quantity}</td>
+                    <td>{user.sellValue}</td>
+                    <td>{user.buyValue}</td>
+                    <td>{user.type}</td>
                     <td>
-                        <button className="btn btn-warning" 
-                        onClick={() => this.load(user)}>
+                        <button className="btn btn-warning"
+                            onClick={() => this.load(user)}>
                             <i className="fa fa-pencil"></i>
                         </button>
-                        <button className="btn btn-danger ml-2" 
-                        onClick={() => this.remove(user)}>
+                        <button className="btn btn-danger ml-2"
+                            onClick={() => this.remove(user)}>
                             <i className="fa fa-trash"></i>
                         </button>
                     </td>

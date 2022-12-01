@@ -6,10 +6,10 @@ export default props =>
  <aside className="menu-area">
     <nav className="menu">
     <Link to="/">
-      <i className="fa fa-home">Início</i>
+      <i className="fa fa-home">  Início</i>
     </Link>
     <Link to="/users">
-      <i className="fa fa-users">Usuários</i>
+      <i className="fa fa-users">  Produtos</i>
     </Link>
     </nav>
  </aside>

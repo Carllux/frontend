@@ -78,6 +78,7 @@ export default class UserCrud extends Component {
                         </div>
                     </div>
                 </div>
+                
                 <div className="row">
                     <div className="col-lg col-md-6">
                         <div className="form-group">

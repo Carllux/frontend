@@ -11,5 +11,8 @@ export default props =>
     <Link to="/users">
       <i className="fa fa-users">  Controle colaboradores</i>
     </Link>
+    <Link to="/visitantes">
+      <i className="fa fa-cloud">  Visitantes</i>
+    </Link>
     </nav>
  </aside>

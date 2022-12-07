@@ -2,17 +2,17 @@ import React, { Component } from "react";
 import Main from '../template/Main.jsx'
 import axios from 'axios'
 import { baseUrl } from "../../main/Config.jsx";
-import BasicTimePicker from "../template/timePicker.jsx";
+// import BasicTimePicker from "../template/timePicker.jsx";
 
 const headerProps = {
-    icon: 'money-bill-wheat',
-    title: 'Produtos',
-    subtitle: 'Página de cadastro de produtos'
+    icon: 'users',
+    title: ' Colaboradores',
+    subtitle: 'Controle de colaboradores'
 }
 
 
 const initialState = {
-    user: { name: '', quantity: 0.00, sellValue: 0.00, costValue: 0.00, type: '' },
+    user: { name: '', arriveTime: '', leaveTime: '', comment: ''},
     list: []
 }
 
@@ -53,80 +53,60 @@ export default class UserCrud extends Component {
 
     renderForm() {
         return (
-            
+
             <div className="form">
                 <div className="row">
                     <div className="col-lg col-md-12">
                         <div className="form-group">
                             <label htmlFor=""><strong>Nome</strong></label>
                             <input type="text" className="form-control"
-                                name="email"
+                                name="name"
                                 value={this.state.user.name}
                                 onChange={e => this.updateField(e)}
-                                placeholder="Digite o nome do produto" />
+                                placeholder="Digite o nome do colaborador" />
                         </div>
                     </div>
 
                 </div>
                 <div className="row">
+                    <div className="col-6 col-md-6">
+                        <div className="form-group">
+                            <label htmlFor=""><strong>Horário de entrada</strong></label>
+                            <input type="text" className="form-control"
+                                name="arriveTime"
+                                value={this.state.user.arriveTime}
+                                onChange={e => this.updateField(e)}
+                                placeholder="Digite o horário de chegada do colaborador" />
+                        </div>
+                    </div>
+
+
+
+                    <div className="col-6 col-md-6">
+                        <div className="form-group">
+                            <label htmlFor=""><strong>Horário de saída</strong></label>
+                            <input type="text" className="form-control"
+                                name="leaveTime"
+                                value={this.state.user.leaveTime}
+                                onChange={e => this.updateField(e)}
+                                placeholder="Digite o horário de saída do colaborador" />
+                        </div>
+                    </div>
+                </div>
+
+                <div className="row">
                     <div className="col-lg col-md-6">
                         <div className="form-group">
-                            <label htmlFor=""><strong>Quantidade</strong></label>
+                            <label htmlFor=""><strong>Observações</strong></label>
                             <input type="text" className="form-control"
-                                name="email"
-                                value={this.state.user.quantity}
+                                name="comment"
+                                value={this.state.user.comment}
                                 onChange={e => this.updateField(e)}
-                                placeholder="0.00" />
+                            />
                         </div>
                     </div>
                 </div>
                 
-                <div className="row">
-                    <div className="col-lg col-md-6">
-                        <div className="form-group">
-                            <label htmlFor=""><strong>Valor venda</strong></label>
-                            <input type="text" className="form-control"
-                                name="email"
-                                value={this.state.user.sellValue}
-                                onChange={e => this.updateField(e)}
-                                placeholder="0.00" />
-                        </div>
-                    </div>
-                </div>
-                <div className="row">
-                    <div className="col-lg col-md-6">
-                        <div className="form-group">
-                            <label htmlFor=""><strong>Valor de custo</strong></label>
-                            <input type="text" className="form-control"
-                                name="email"
-                                value={this.state.user.costValue}
-                                onChange={e => this.updateField(e)}
-                                placeholder="0.00" />
-                        </div>
-                    </div>
-                </div>
-                <div className="row">
-                    <span className="ml-center p-3"><strong>Tipo de produto</strong></span>
-                    <div class="form-check form-check-inline p-3">
-                        <input class="form-check-input" type="radio" name="inlineRadioOptions" value="dog" />
-                        <label class="form-check-label" for="inlineRadio1">Produtos Cachorros</label>
-                    </div>
-
-                    <div class="form-check form-check-inline p-3">
-                        <input class="form-check-input" type="radio" name="inlineRadioOptions" value="cat" />
-                        <label class="form-check-label" for="inlineRadio2">Produtos Gatos</label>
-                    </div>
-
-                    <div class="form-check form-check-inline p-3">
-                        <input class="form-check-input" type="radio" name="inlineRadioOptions" value="bird" />
-                        <label class="form-check-label" for="inlineRadio3">Produtos Aves</label>
-                    </div>
-                    <div class="form-check form-check-inline p-3">
-                        <input class="form-check-input" type="radio" name="inlineRadioOptions" value="fish" />
-                        <label class="form-check-label" for="inlineRadio3">Produtos Peixes</label>
-                    </div>
-
-                </div>
                 <hr />
                 <div className="row">
                     <div className="col-12 d-flex justify-content-end">
@@ -161,11 +141,10 @@ export default class UserCrud extends Component {
                 <thead>
                     <tr>
                         <th>ID</th>
-                        <th>Produto</th>
-                        <th>Quantidade</th>
-                        <th>Valor custo</th>
-                        <th>Valor venda</th>
-                        <th>Tipo de produto</th>
+                        <th>Nome</th>
+                        <th>Horário chegada</th>
+                        <th>Horário saída</th>
+                        <th>Observações</th>
                         <th>Ações</th>
                     </tr>
                 </thead>
@@ -177,16 +156,15 @@ export default class UserCrud extends Component {
     }
 
     renderRows() {
-        console.log("to rodando")
+        // console.log("to rodando")
         return this.state.list.map(user => {
             return (
                 <tr key={user.id}>
                     <td>{user.id}</td>
                     <td>{user.name}</td>
-                    <td>{user.quantity}</td>
-                    <td>{user.sellValue}</td>
-                    <td>{user.buyValue}</td>
-                    <td>{user.type}</td>
+                    <td>{user.arriveTime}</td>
+                    <td>{user.leaveTime}</td>
+                    <td>{user.comment}</td>
                     <td>
                         <button className="btn btn-warning"
                             onClick={() => this.load(user)}>
